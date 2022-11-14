@@ -27,8 +27,8 @@ isDeleted: {
 },
 isPublished: {
     type:Boolean,
-    default: false},
+    default: true},
 },
 { timestamps: true });
 
-module.exports.blogSchema =("Blog",blogSchema)
+module.exports =mongoose.model('Blogs',blogSchema)

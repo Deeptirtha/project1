@@ -12,7 +12,7 @@ const createAuthor= async function (req, res) {
         return re.test(mail);
       }
       let mailvalidation= validateEmail(email)
-      if(mailvalidation==false){req.status(400).send({status: false, msg:"mail id is not valid" })}
+      if(mailvalidation==false){res.status(400).send({status: false, msg:"mail id is not valid" })}
 
     let authorCreated = await AuthorModel.create(req.body)
     res.send({data: authorCreated})}
