@@ -10,6 +10,7 @@ router.get("/project",function(req,res){
 
 router.post("/authors",authercontroller.createAuthor)
 router.post("/blogs",blogcontroller.createBlog)
+router.get("/blogs",blogcontroller.getBlogData)
 
 
 
