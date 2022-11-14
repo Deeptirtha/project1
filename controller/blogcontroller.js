@@ -14,7 +14,6 @@ const createBlog= async function (req, res) {
     if(!authorId){return res.status(400).send({status:false,msg:"authorld is mandatory"})}
     if(!category){return res.status(400).send({status:false,msg:"category is mandatory"})}
 
-    if(!title||!body||!authorId||!category){return res.status(400).send({status:false,msg:"all field is mandatory"})}
     if(!isValidObjectId(authorId)){return res.status(400).send({status:false,msg:"author id is not valid"})}
 
     let authorchk = await AuthorModel.find({_id:authorId})
@@ -24,8 +23,7 @@ const createBlog= async function (req, res) {
     res.status(201).send({data: blogCreated})
 }
 catch(error){
-    message=error.message
-    res.status(500).send({status:false,msg:message})
+    res.status(500).send({status:false,msg:error.message})
 }}
 
 const getBlogData= async function (req, res) {
