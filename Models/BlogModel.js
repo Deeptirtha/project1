@@ -12,6 +12,7 @@ title: {
  },
  authorId: {
     type: ObjectId,
+    require:true,
     ref: "Author"   
 }, 
  tags: [String],
@@ -30,4 +31,4 @@ isPublished: {
 },
 { timestamps: true });
 
-module.exports.blogSchema =blogSchema
+module.exports.blogSchema =("Blog",blogSchema)
