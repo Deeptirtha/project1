@@ -28,6 +28,12 @@ isDeleted: {
 isPublished: {
     type:Boolean,
     default: true},
+deletedAt: {
+        type: String
+      },
+publishedAt: {
+        type: String,
+      }
 },
 { timestamps: true });
 
