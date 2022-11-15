@@ -11,6 +11,9 @@ router.get("/project",function(req,res){
 router.post("/authors",authercontroller.createAuthor)
 router.post("/blogs",blogcontroller.createBlog)
 router.get("/blogs",blogcontroller.getBlogData)
+router.put("/blogs/:blogId",blogcontroller.updateData)
+router.delete("/blogs/:blogId",blogcontroller.deleteBlogById)
+router.delete("/blogs",blogcontroller.deleteBlogs)
 
 
 
