@@ -5,6 +5,7 @@ const createAuthor= async function (req, res) {
     try{
     let {fname,lname,title,email,password} = req.body
     let body = req.body
+    if(!body){return res.status(400).send({status: false, msg:"body is empty" })}
     let bodydata=Object.keys(body)
     if(bodydata.length==0){return res.status(400).send({status: false, msg:"body is empty" })}
     

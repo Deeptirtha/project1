@@ -6,6 +6,7 @@ const createBlog= async function (req, res) {
     try{
     let {title,body,authorId,category} = req.body
     let sendbody = req.body
+    if(!sendbody){return res.status(400).send({status: false, msg:"body is empty" })}
     let bodydata=Object.keys(sendbody)
     if(bodydata.length==0){return res.status(400).send({status: false, msg:"body is empty" })}
 

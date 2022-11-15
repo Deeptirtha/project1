@@ -2,25 +2,25 @@ const mongoose=require('mongoose');
 const authorSchema=new mongoose.Schema({
      fname:{
         type: String ,
-        require:true
+        required:true
     },
      lname: {
         type:String,
-        require:true
+        required:true
     }, 
     title: {
         type:String,
-        require:true, 
+        required:true, 
         enum:["Mr", "Mrs", "Miss"]}, 
    email: {
            type:String,
-           require:true,
+           required:true,
            unique:true,
           lowercase:true
             },
      password: {
         type:String,
-        require:true}
+        required:true}
      },{timestemps:true}
 )
 
