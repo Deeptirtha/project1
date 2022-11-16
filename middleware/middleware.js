@@ -8,12 +8,13 @@ const authentication = function (req, res, next) {
         let token = req.headers["x-api-key"];
          if (!token) return res.status(400).send({ status: false, msg: "token must be present in header" })
          try{var decodedToken = jwt.verify(token, "project-1-Room-9")}
-         catch(err){return res.status(400).send({status: false, msg:"invalid Token"})}
+         catch(err){return res.status(400).send({status: false, msg:"invalid Token comming"})}
          if (!decodedToken) return res.status(400).send({ status: false, msg: "token is invalid" });
          else {
             req.decodedToken = decodedToken
             next()}
         }
+        
     catch(err){
         res.status(500).send({msg:err.message})
     }

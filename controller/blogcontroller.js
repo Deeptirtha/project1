@@ -17,8 +17,8 @@ const createBlog= async function (req, res) {
 
     if(!isValidObjectId(authorId)){return res.status(400).send({status:false,msg:"author id is not valid"})}
 
-    let authorchk = await AuthorModel.find({_id:authorId})
-    if(authorchk.length<1) {return res.status(400).send({status:false,msg:"author id is not present in db"})}
+    let authorchk = await AuthorModel.findById(authorId)
+    if(!authorchk) {return res.status(400).send({status:false,msg:"author id is not present in db"})}
 
     let blogCreated = await blogModel.create(req.body)
     res.status(201).send({data: blogCreated})

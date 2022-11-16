@@ -26,13 +26,13 @@ const createAuthor= async function (req, res) {
       let mailvalidation= validateEmail(email)
       if(mailvalidation==false){return res.status(400).send({status: false, msg:"mail id is not valid" })}
 
-// function checkPassword(str)
-// {
-//     var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-//     return re.test(str);
-// }
-// let passvalidation=checkPassword(password)
-// if(passvalidation==false){return res.status(400).send({status: false, msg:"mail id is not valid" })}
+function checkPassword(str)
+{
+    var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    return re.test(str);
+}
+let passvalidation=checkPassword(password)
+if(passvalidation==false){return res.status(400).send({status: false, msg:"password is not valid" })}
 
     let authorCreated = await AuthorModel.create(req.body)
     res.status(201).send({data: authorCreated})}
@@ -47,12 +47,12 @@ const loginAthor=async function(req,res){
        let email=req.body.email
        let password=req.body.password
      let   body=req.body
-     if (Object.keys(body)==0)return res.status(400).send({sattus:false,msg:"body is empty can't login"})
-     if(!email)return res.status(400).send({sattus:false,msg:"email is empty can't login"})
-     if(!password)return res.status(400).send({sattus:false,msg:"password is empty can't login"})
+     if (Object.keys(body)==0)return res.status(400).send({satus:false,msg:"body is empty can't login"})
+     if(!email)return res.status(400).send({satus:false,msg:"email is empty can't login"})
+     if(!password)return res.status(400).send({satus:false,msg:"password is empty can't login"})
        let auther=await AuthorModel.findOne({email:email,password:password});
        if(!auther)
-       return res.status(400).send({status:false,msg:"email and password is not present"});
+       return res.status(400).send({status:false,msg:"No data is present eith this email and password is not present"});
        let token=jwt.sign({
            authorId:auther._id.toString() 
        },
