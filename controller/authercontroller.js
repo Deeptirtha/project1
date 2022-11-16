@@ -24,7 +24,15 @@ const createAuthor= async function (req, res) {
         return re.test(mail);
       }
       let mailvalidation= validateEmail(email)
-      if(mailvalidation==false){res.status(400).send({status: false, msg:"mail id is not valid" })}
+      if(mailvalidation==false){return res.status(400).send({status: false, msg:"mail id is not valid" })}
+
+// function checkPassword(str)
+// {
+//     var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+//     return re.test(str);
+// }
+// let passvalidation=checkPassword(password)
+// if(passvalidation==false){return res.status(400).send({status: false, msg:"mail id is not valid" })}
 
     let authorCreated = await AuthorModel.create(req.body)
     res.status(201).send({data: authorCreated})}
@@ -56,6 +64,7 @@ const loginAthor=async function(req,res){
            res.status(500).send({status:false,msg:err.message})}
        }
    
-   module.exports.loginAthor=loginAthor
+
 
 module.exports.createAuthor= createAuthor
+module.exports.loginAthor=loginAthor

@@ -10,12 +10,18 @@ router.get("/project",function(req,res){
 
 
 router.post("/authors",authercontroller.createAuthor)
+
 router.post("/login",authercontroller.loginAthor)
-router.post("/blogs",blogcontroller.createBlog)
-router.get("/blogs",blogcontroller.getBlogData)
-router.put("/blogs/:blogId",middleware.validationMiddleware,middleware.authorization,blogcontroller.updateData)
-router.delete("/blogs/:blogId",blogcontroller.deleteBlogById)
-router.delete("/blogs",blogcontroller.deleteBlogs)
+
+router.post("/blogs",middleware.authentication,blogcontroller.createBlog)
+
+router.get("/blogs",middleware.authentication,blogcontroller.getBlogData)
+
+router.put("/blogs/:blogId",middleware.authentication,middleware.authorization,blogcontroller.updateData) 
+
+router.delete("/blogs/:blogId",middleware.authentication,middleware.authorization,blogcontroller.deleteBlogById)
+
+router.delete("/blogs",middleware.authentication,blogcontroller.deleteBlogs)
 
 
 
