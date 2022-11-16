@@ -99,11 +99,16 @@ const getBlogData= async function (req, res) {
   const deleteBlogs = async (req, res) =>{
     try{
       let data = req.query
+      let decodedToken = req.decodedToken
+   
       if(Object.keys(data).length == 0) return res.send({ status: false, msg: "Error!, no query found" })
 
       if(data.hasOwnProperty('authorId')){ 
-        if(!isValidObjectId(data.authorId)) return res.status(400).send({ status: false, msg: "Enter a valid author Id" })}
-
+        if(!isValidObjectId(data.authorId)) return res.status(400).send({ status: false, msg: "Enter a valid author Id" })
+        if(decodedToken.authorId !== data.authorId) return res.status(403).send({ status: false, msg: "Action Forbidden" })
+      }
+     data.authorId=req.decodedToken.authorId
+    
     let timeStamps = new Date()
       
     let getBlogData = await blogModel.find(data)
