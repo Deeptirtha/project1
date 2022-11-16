@@ -1,4 +1,5 @@
 const AuthorModel= require("../Models/authormodel")
+const jwt=require("jsonwebtoken")
 
 const createAuthor= async function (req, res) {
 
@@ -32,10 +33,29 @@ const createAuthor= async function (req, res) {
     }
 }
 
-const getAuthorsData= async function (req, res) {
-    let authors = await AuthorModel.find()
-    res.send({data: authors})
-}
+const loginAthor=async function(req,res){
+    try{
+      
+       let email=req.body.email
+       let password=req.body.password
+     let   body=req.body
+     if (Object.keys(body)==0)return res.status(400).send({sattus:false,msg:"body is empty can't login"})
+     if(!email)return res.status(400).send({sattus:false,msg:"email is empty can't login"})
+     if(!password)return res.status(400).send({sattus:false,msg:"password is empty can't login"})
+       let auther=await AuthorModel.findOne({email:email,password:password});
+       if(!auther)
+       return res.status(400).send({status:false,msg:"email and password is not present"});
+       let token=jwt.sign({
+           authorId:auther._id.toString() 
+       },
+       "project-1-Room-9"
+       )
+       res.setHeader("x-api-key",token)
+       res.status(200).send({status:true,msg:token})}
+       catch(err){
+           res.status(500).send({status:false,msg:err.message})}
+       }
+   
+   module.exports.loginAthor=loginAthor
 
 module.exports.createAuthor= createAuthor
-module.exports.getAuthorsData= getAuthorsData

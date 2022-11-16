@@ -117,7 +117,7 @@ const getBlogData= async function (req, res) {
         return res.status(404).send({ status: false, msg: "The Blog is already deleted" })
       }
 
-      let deletedBlogs = await blogModel.updateMany({ $or: [{ authorId:data.authorId }, { category:data.category }, { tags:data.tag}, { subcategory:data.subcategory}]},
+      let deletedBlogs = await blogModel.updateMany({ $or: [{ authorId:data.authorId }, { category:data.category }, { tags:data.tag}, { subcategory:data.subcategory},{isPublished:data.isPublished}]},
         {$set:{isDeleted: true, isPublished: false, deletedAt: timeStamps}}
       )
   
