@@ -16,7 +16,19 @@ const createAuthor= async function (req, res) {
     if(!email){ return res.status(400).send({status: false, msg:"email is mandatary" })}
     if(!password){ return res.status(400).send({status: false, msg:"password is manda"})}
 
-
+    function isValidname(firstname) {
+        if (
+            typeof firstname !== "string" ||
+            /[0-9]+/g.test(firstname)
+        ) {
+            return false; 
+        }
+        return true;
+    }
+    let fnamevalidation=isValidname(fname)
+    if(fnamevalidation==false){return res.status(400).send({status: false, msg:"Error! please enter a valid first name" })}
+    let lnamevalidation=isValidname(lname)
+    if(lnamevalidation==false){return res.status(400).send({status: false, msg:"Error! please enter a valid last name" })}
     
 
     function validateEmail(mail) {
@@ -26,7 +38,7 @@ const createAuthor= async function (req, res) {
       let mailvalidation= validateEmail(email)
       if(mailvalidation==false){return res.status(400).send({status: false, msg:"mail id is not valid" })}
 
-function checkPassword(str)
+    function checkPassword(str)
 {
     var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     return re.test(str);
