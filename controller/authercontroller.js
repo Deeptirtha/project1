@@ -6,9 +6,21 @@ const createAuthor = async function (req, res) {
     try {
         let { fname, lname, title, email, password } = req.body
         let body = req.body
-       
+
         let bodydata = Object.keys(body)
         if (bodydata.length == 0) { return res.status(400).send({ status: false, msg: "body is empty" }) }
+
+        function trimm(name) {
+            if (name.trim().length == 0) { return false }
+            else { return name.trim() }
+        }
+        fname = trimm(fname)
+        lname = trimm(lname)
+        title = trimm(title)
+        body.fname=fname
+        body.lname=lname
+        body.title=title
+
 
         if (!fname) { return res.status(400).send({ status: false, msg: "firstname is mandatary" }) }
         if (!lname) { return res.status(400).send({ status: false, msg: "lasttname is mandatary" }) }
@@ -45,7 +57,7 @@ const createAuthor = async function (req, res) {
         let passvalidation = checkPassword(password)
         if (passvalidation == false) { return res.status(400).send({ status: false, msg: "password is not valid" }) }
 
-        let authorCreated = await AuthorModel.create(req.body)
+        let authorCreated = await AuthorModel.create(req.body )
         res.status(201).send({ data: authorCreated })
     }
     catch (err) {

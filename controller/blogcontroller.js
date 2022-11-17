@@ -6,9 +6,19 @@ const createBlog = async function (req, res) {
   try {
     let { title, body, authorId, category } = req.body
     let sendbody = req.body
-    
+
     let bodydata = Object.keys(sendbody)
     if (bodydata.length == 0) { return res.status(400).send({ status: false, msg: "body is empty" }) }
+
+    function trimm(name) {
+      if (name.trim().length == 0) { return false }
+      else { return name.trim() }
+    }
+
+    title = trimm(title)
+    body = trimm(body)
+    sendbody.title = title
+    sendbody.body = body
 
     if (!title) { return res.status(400).send({ status: false, msg: "title is mandatory" }) }
     if (!body) { return res.status(400).send({ status: false, msg: "body is mandatory" }) }
@@ -92,7 +102,7 @@ const deleteBlogById = async (req, res) => {
     if (data.isDeleted) return res.status(404).send({ status: false, msg: "Data already deleted" })
     let timeStamps = new Date()
     await blogModel.findOneAndUpdate({ _id: blogId }, { isDeleted: true, isPublished: false, deletedAt: timeStamps })
-    res.status(200).send({status: true, msg: "Deleted" })
+    res.status(200).send({ status: true, msg: "Deleted" })
   } catch (err) {
     res.status(500).send({ status: false, error: err.message });
   }
