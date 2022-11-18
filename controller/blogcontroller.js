@@ -10,6 +10,13 @@ const createBlog = async function (req, res) {
     let bodydata = Object.keys(sendbody)
     if (bodydata.length == 0) { return res.status(400).send({ status: false, msg: "body is empty" }) }
 
+
+
+    if (!title) { return res.status(400).send({ status: false, msg: "title is mandatory" }) }
+    if (!body) { return res.status(400).send({ status: false, msg: "body is mandatory" }) }
+    if (!authorId) { return res.status(400).send({ status: false, msg: "authorld is mandatory" }) }
+    if (!category) { return res.status(400).send({ status: false, msg: "category is mandatory" }) }
+
     function trimm(name) {
       if (name.trim().length == 0) { return false }
       else { return name.trim() }
@@ -19,11 +26,6 @@ const createBlog = async function (req, res) {
     body = trimm(body)
     sendbody.title = title
     sendbody.body = body
-
-    if (!title) { return res.status(400).send({ status: false, msg: "title is mandatory" }) }
-    if (!body) { return res.status(400).send({ status: false, msg: "body is mandatory" }) }
-    if (!authorId) { return res.status(400).send({ status: false, msg: "authorld is mandatory" }) }
-    if (!category) { return res.status(400).send({ status: false, msg: "category is mandatory" }) }
 
     if (!isValidObjectId(authorId)) { return res.status(400).send({ status: false, msg: "author id is not valid" }) }
 
@@ -53,7 +55,7 @@ const getBlogData = async function (req, res) {
     else {
       if (!isValidObjectId(Id)) { return res.status(400).send({ status: false, msg: "author id is not valid" }) }
       let result = await blogModel.find(data).populate('authorId')
-      if (result.length < 1) { res.status(404).send({ status: false, msg: "no blog found" }) }
+      if (result.length == 0) { res.status(404).send({ status: false, msg: "no blog found" }) }
       else { res.status(200).send({ status: true, msg: result }) }
     }
   }

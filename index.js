@@ -1,19 +1,19 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const route = require("./routes/route.js")
+const express=require("express")
+const bodyparser=require ("body-parser")
+const app=express()
+const route =require('./routes/route.js')
+ const mongoose=require("mongoose")
+ app.use(bodyparser.json())
+ app.use(bodyparser.urlencoded({extended:true}))
 
-const mongoose = require('mongoose')
-const app = express()
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }))
+ mongoose.connect("mongodb+srv://DeeptirthaMukherjee:QYKI3k8QSKC4I7FZ@cluster1.khatgm1.mongodb.net/project1-db?retryWrites=true&w=majority",{
+useNewUrlParser:true
+ })
 
-mongoose.connect("mongodb+srv://DeeptirthaMukherjee:QYKI3k8QSKC4I7FZ@cluster1.khatgm1.mongodb.net/project1-db?retryWrites=true&w=majority", {
-    useNewUrlParser: true
-})
-    .then(() => console.log("connected"))
-    .catch(error => console.log(error))
+ .then(()=>console.log("connected"))
+ .catch(err=> console.log(err.msg))
 
-app.use("/", route)
-app.listen(process.env.PORT || 3000, function () {
-    console.log("running at " + (process.env.PORT || 3000))
-})
+ app.use("/",route)
+ app.listen(process.env.PORT || 3000, function(){
+    console.log("running at "+(process.env.PORT||3000))
+ })

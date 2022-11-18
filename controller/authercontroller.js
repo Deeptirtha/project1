@@ -10,6 +10,16 @@ const createAuthor = async function (req, res) {
         let bodydata = Object.keys(body)
         if (bodydata.length == 0) { return res.status(400).send({ status: false, msg: "body is empty" }) }
 
+       
+
+        
+        if (!fname) { return res.status(400).send({ status: false, msg: "firstname is mandatary" }) }
+        if (!lname) { return res.status(400).send({ status: false, msg: "lasttname is mandatary" }) }
+        if (!title) { return res.status(400).send({ status: false, msg: "title is mandatary" }) }
+        if (!email) { return res.status(400).send({ status: false, msg: "email is mandatary" }) }
+        if (!password) { return res.status(400).send({ status: false, msg: "password is manda" }) }
+        if (!(/^(Mr|Mrs|Miss)+$\b/).test(title)) return res.status(400).send({ status: false, msg: "Please Use Valid Title Only" })
+        
         function trimm(name) {
             if (name.trim().length == 0) { return false }
             else { return name.trim() }
@@ -20,13 +30,6 @@ const createAuthor = async function (req, res) {
         body.fname=fname
         body.lname=lname
         body.title=title
-
-
-        if (!fname) { return res.status(400).send({ status: false, msg: "firstname is mandatary" }) }
-        if (!lname) { return res.status(400).send({ status: false, msg: "lasttname is mandatary" }) }
-        if (!title) { return res.status(400).send({ status: false, msg: "title is mandatary" }) }
-        if (!email) { return res.status(400).send({ status: false, msg: "email is mandatary" }) }
-        if (!password) { return res.status(400).send({ status: false, msg: "password is manda" }) }
 
         function isValidname(firstname) {
             if (
