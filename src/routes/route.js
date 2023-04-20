@@ -29,8 +29,6 @@ router.delete("/blogs", middleware.authentication, blogcontroller.deleteBlogs)
 router.get("/blogs/:id",  blogcontroller.blogd)
 
 
-
-
 router.post("/comment/:BlogId", newComment)
 
 router.get("/comment/:BlogId", getComments)
