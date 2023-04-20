@@ -22,7 +22,10 @@ const authorSchema = new mongoose.Schema({
    password: {
       type: String,
       required: true
-   }
+   },
+   profile: {
+      type: String
+  }
 }, { timestemps: true }
 )
 

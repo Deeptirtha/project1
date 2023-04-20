@@ -1,11 +1,14 @@
 const AuthorModel = require("../Models/authormodel")
 const jwt = require("jsonwebtoken")
+const { uploadFile } =require ("../aws")
 
 const createAuthor = async function (req, res) {
 
     try {
-        let { fname, lname, title, email, password } = req.body
+
+        let { fname, lname, title, email, password ,authorId,pic} = req.body
         let body = req.body
+        let files = req.files;
 
         let bodydata = Object.keys(body)
         if (bodydata.length == 0) { return res.status(400).send({ status: false, msg: "body is empty" }) }
@@ -24,12 +27,12 @@ const createAuthor = async function (req, res) {
             if (name.trim().length == 0) { return false }
             else { return name.trim() }
         }
-        fname = trimm(fname)
-        lname = trimm(lname)
-        title = trimm(title)
-        body.fname=fname
-        body.lname=lname
-        body.title=title
+        if (fname) fname = trimm(fname)
+        if (lname)  lname = trimm(lname)
+        if (title)  title = trimm(title)
+        if (fname)  body.fname=fname
+        if (lname)  body.lname=lname
+        if (title) body.title=title
 
         function isValidname(firstname) {
             if (
@@ -59,8 +62,16 @@ const createAuthor = async function (req, res) {
         }
         let passvalidation = checkPassword(password)
         if (passvalidation == false) { return res.status(400).send({ status: false, msg: "password is not valid" }) }
+        if (files.length>0) {
+            body.profile = await uploadFile(files[0])
+        }else{
+            body.profile = pic
+        }
+        if(authorId){
+            var authorCreated=await AuthorModel.findByIdAndUpdate(authorId,body,{new:true})
+        }
 
-        let authorCreated = await AuthorModel.create(req.body )
+        else {var authorCreated = await AuthorModel.create(body )}
         res.status(201).send({ data: authorCreated })
     }
     catch (err) {
@@ -86,7 +97,7 @@ const loginAthor = async function (req, res) {
             "project-1-Room-9"
         )
         res.setHeader("x-api-key", token)
-        res.status(200).send({ status: true, msg: token })
+        res.status(200).send({ status: true, data: { token: token, user: auther }})
     }
     catch (err) {
         res.status(500).send({ status: false, msg: err.message })

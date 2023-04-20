@@ -34,6 +34,9 @@ const blogSchema = new mongoose.Schema({
     },
     publishedAt: {
         type: String,
+    },
+    blogImage:{
+        type:String
     }
 },
     { timestamps: true });
